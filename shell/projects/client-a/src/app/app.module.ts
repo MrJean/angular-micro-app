@@ -1,20 +1,47 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injector, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { createCustomElement } from '@angular/elements';
 
 import { AppComponent } from './app.component';
 import { CoreComponent } from './core/core.component';
 import { EmptyComponent } from './empty/empty.component';
+import { RouterModule } from '@angular/router';
+import { FlightsComponent } from './flights/flights.component';
+import { PushPipe } from './push.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CoreComponent,
-    EmptyComponent
+    FlightsComponent,
+    EmptyComponent,
+    PushPipe,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot([
+      {
+        path: 'client-a', component: CoreComponent, children: [
+          { path: 'flights', component: FlightsComponent },
+        ]
+      },
+      { path: '**', component: EmptyComponent }
+    ], { useHash: true }),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  entryComponents: [
+    AppComponent,
+  ]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(private injector: Injector) {
+  }
+
+  ngDoBootstrap() {
+    const appElement = createCustomElement(AppComponent, { injector: this.injector });
+    customElements.define('client-a', appElement);
+  }
+}
