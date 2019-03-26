@@ -28,9 +28,6 @@ The client projects' configuration must be adapted to use the `ngx-build-plus` p
         },
         "serve": {
             "builder": "ngx-build-plus:dev-server",
-            "scripts": [
-                "node_modules/@webcomponents/custom-elements/src/native-shim.js"
-            ],
           ...
         },
         ...
@@ -88,4 +85,5 @@ Adapt **app.module.ts** the following way to start using these components.
       { path: '**', component: EmptyComponent }
     ], { useHash: true }),
   ],
+})
 ```
