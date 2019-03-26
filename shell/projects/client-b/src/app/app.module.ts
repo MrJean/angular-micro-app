@@ -1,20 +1,42 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injector } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { CoreComponent } from './core/core.component';
 import { EmptyComponent } from './empty/empty.component';
+import { createCustomElement } from '@angular/elements';
+import { RouterModule } from '@angular/router';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CoreComponent,
-    EmptyComponent
+    EmptyComponent,
+    CartComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot([
+      {
+        path: 'client-b', component: CoreComponent, children: [
+          { path: 'cart', component: CartComponent }
+        ]
+      },
+      { path: '**', component: EmptyComponent }
+    ], { useHash: true })
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [],
+  entryComponents: [
+    AppComponent
+  ]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private injector: Injector) {}
+
+  ngDoBootstrap() {
+    const appElement = createCustomElement(AppComponent, { injector: this.injector });
+    customElements.define('client-b', appElement);
+  }
+}

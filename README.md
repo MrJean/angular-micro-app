@@ -61,6 +61,11 @@ After installing `@webcomponents/custom-elements` add the following line to the 
 
 Each client must contain both a **core** and **empty** component.
 
+```
+ng g c core --project client-x
+ng g c empty --project client-x
+```
+
 #### Core component
 
 Will be used to route incoming addresses to the corresponding child component (e.g. client-x/child-route).
@@ -75,15 +80,47 @@ Adapt **app.module.ts** the following way to start using these components.
 
 ```
 @NgModule({
-  imports: [
-    RouterModule.forRoot([
-      {
-        path: 'client-x', component: CoreComponent, children: [
-          { path: 'child-route', component: DummyComponent },
-        ]
-      },
-      { path: '**', component: EmptyComponent }
-    ], { useHash: true }),
-  ],
+    imports: [
+        RouterModule.forRoot([
+            {
+                path: 'client-x', component: CoreComponent, children: [
+                    { path: 'child-route', component: DummyComponent },
+                ]
+            },
+            { path: '**', component: EmptyComponent }
+        ], { useHash: true }),
+    ],
 })
+```
+
+## Registering a component as Custom Element
+
+First of all, make sure **encapsulation** on your component you want to set as Custom Element is set to **ViewEncapsulation.Emulated**. Also remove the **selector** property.
+
+You'll need to add **CUSTOM_ELEMENTS_SCHEMA** in app.module of your client and add the component you'll expose a a custom element in the **entryComponents** property.
+
+```
+@NgModule({
+    declarations: [
+        AppComponents,
+    ]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    entryComponents: [
+        AppComponent,
+    ],
+})
+```
+
+Now let's register your custom element. Make sure to add the **Injector** to your constructor and import it from **@angular/core**.
+
+```
+export class AppModule { 
+    constructor(private injector: Injector) {
+    }
+
+    ngDoBootstrap() {
+        const appElement = createCustomElement(AppComponent, { injector: this.injector});
+        customElements.define('client-x', appElement);
+    }
+}
 ```
