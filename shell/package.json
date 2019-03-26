@@ -3,8 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "live-server dist/shell",
+    "build": "npm run build:shell && npm run build:clients",
+    "build:clients": "npm run build:client-a && npm run build:client-b",
+    "build:client-a": "ng build --prod --project client-a --output-hashing none --vendor-chunk false --single-bundle true --output-path dist/shell/client-a",
+    "build:client-b": "ng build --prod --project client-b --output-hashing none --vendor-chunk false --single-bundle true --output-path dist/shell/client-b",
+    "build:shell": "ng build --project shell",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

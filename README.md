@@ -10,6 +10,13 @@ ng serve --project client-a --open
 ng serve --project client-b --open
 ```
 
+Available application paths:
+
+* /#/client-a
+* /#/client-a/flights
+* /#/client-b
+* /#/client-b/cart
+
 ## Client projects configuration
 
 ### ngx-build-plus
@@ -24,6 +31,12 @@ The client projects' configuration must be adapted to use the `ngx-build-plus` p
     "architect": {
         "build": {
             "builder": "ngx-build-plus:build",
+            "options": {
+                "scripts": [
+                    "node_modules/@webcomponents/custom-elements/src/native-shim.js"
+                ],
+                ...
+            },
             ...
         },
         "serve": {
