@@ -10,12 +10,21 @@ ng serve --project client-a --open
 ng serve --project client-b --open
 ```
 
+*Note:* client projects are not available during `ng serve`.
+
 Available application paths:
 
 * /#/client-a
 * /#/client-a/flights
 * /#/client-b
 * /#/client-b/cart
+
+## Serving a build
+
+```
+npm run build
+npm run start
+```
 
 ## Client projects configuration
 
