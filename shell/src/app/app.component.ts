@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import '../../../client-c/dist';
 import { StateService } from './state.service';
 
-import '../../../client-c/dist';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +21,11 @@ export class AppComponent implements OnInit {
       loaded: false,
       path: 'client-b/main.js',
       element: 'client-b'
+    },
+    "client-d": {
+      loaded: false,
+      path: 'client-d/client-d.js',
+      // scripts: ['https://unpkg.com/vue']
     }
   };
 
@@ -28,6 +33,7 @@ export class AppComponent implements OnInit {
     this.load('client-a');
     this.load('client-b');
     // this.load('client-c');
+    this.load('client-d');
   }
 
   load(name: string): void {
@@ -38,6 +44,14 @@ export class AppComponent implements OnInit {
     }
 
     const content = document.getElementById('content');
+
+    // if (configItem.scripts) {
+    //   configItem.scripts.map((src) => {
+    //     const script = document.createElement('script');
+    //     script.src = src;
+    //     content.appendChild(script);
+    //   });
+    // }
 
     const script = document.createElement('script');
     script.src = configItem.path;

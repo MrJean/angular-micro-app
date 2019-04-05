@@ -1,7 +1,9 @@
 <template>
-  <div id="clock">
-    <p class="date">{{ date }}</p>
-    <p class="time">{{ time }}</p>
+  <div class="outer-clock">
+    <div id="clock">
+      <p class="date">{{ date }}</p>
+      <p class="time">{{ time }}</p>
+    </div>
   </div>
 </template>
 
@@ -40,13 +42,13 @@ export default {
 </script>
 
 <style>
-html,body {
-    height: 100%;
-}
-body {
+.outer-clock {
+    position: relative;
     background: #0f3854;
     background: radial-gradient(ellipse at center,  #0a2e38  0%, #000000 70%);
     background-size: 100%;
+    height: 200px;
+    width: 500px;
 }
 p {
     margin: 0;

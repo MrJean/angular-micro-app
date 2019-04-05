@@ -174,6 +174,39 @@ Once this is done you can use your component(s) in your application.
 
 **Note:** Import paths are not yet environment specific. See tasks.
 
+## VueJS (client-d)
+
+In main.js the following has been added:
+
+```
+import wrap from '@vue/web-component-wrapper';
+
+const CustomElement = wrap(Vue, App);
+
+window.customElements.define('client-d', CustomElement);
+```
+
+To build the webcomponent run the following command:
+
+```
+vue build --target wc --name client-d ./client-d/src/main.js
+```
+
+***Note:*** Command vue build requires a global addon to be installed.
+
+```
+yarn global add @vue/cli-service-global
+```
+or
+```
+npm i -g @vue/cli-service-global
+```
+
+***Note:*** Vue script needs to be loaded in Angular, not in index.html
+```
+<script src="https://unpkg.com/vue"></script>
+```
+
 ## Tasks
 
 - [x] Shell application
