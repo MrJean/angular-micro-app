@@ -146,3 +146,38 @@ export class AppModule {
     }
 }
 ```
+
+## Stencil (client-c)
+
+Client C is a Stencil component collection. See the [Stencil in Angular documentation](https://stenciljs.com/docs/angular) to see how this is done.
+
+In main.ts the following has been added:
+
+```
+import { defineCustomElements } from 'client-c/dist/loader';
+defineCustomElements(window);
+```
+
+In app.module.ts the following has been added:
+
+```
+schemas: [CUSTOM_ELEMENTS_SCHEMA]
+```
+
+In app.component.ts the following has been added:
+
+```
+import 'client-c/dist';
+```
+
+Once this is done you can use your component(s) in your application.
+
+**Note:** Import paths are not yet environment specific. See tasks.
+
+## Tasks
+
+- [x] Shell application
+- [x] Shell application: client a
+- [x] Shell application: client b
+- [ ] Client C: Create environment specific imports that point to dist folder instead of client-c folder
+- [ ] Client D: Add VueJS client
