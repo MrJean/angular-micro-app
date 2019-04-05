@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from './state.service';
 
+import '../../../client-c/dist';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -25,6 +27,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.load('client-a');
     this.load('client-b');
+    // this.load('client-c');
   }
 
   load(name: string): void {
